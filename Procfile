@@ -1,1 +1,1 @@
-web: gunicorn mercer:app --log-file--
+web: python app.py
