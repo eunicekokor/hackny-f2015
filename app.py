@@ -67,8 +67,8 @@ def hello_world():
   # print instaConfig['access_token']
   access_token = instaConfig.get('access_token', None)
   if access_token is None:
-    url = unauth_api.get_authorize_url(scope=["likes","comments"])
-    return '<a href="%s">Connect with Instagram</a>' % url
+    auth_url = unauth_api.get_authorize_url(scope=["likes","comments"])
+    return render_template("auth_page.html", auth_url=auth_url)
   else:
     final_media = instaConfig['final_media']
     return render_template("index.html", final_media=final_media)
