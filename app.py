@@ -39,13 +39,14 @@ def main():
   r = requests.get(fun_url)
   media = r.json()
   print "work4"
-  print media['data'][0]
+  print media['data']
+  print "I hope this worked"
   
   #media = unauth_api.media_popular(count=20)
   final_media = []
 
-  for m in media:
-    final_media.append(m.url)
+  for m in media['data']:
+    final_media.append(m['images']['low_resolution']["url"])
   return render_template("index.html", final_media=final_media)
   # print "holla!!!!"
   # url = api.get_authorize_url(scope=["likes","comments"])
