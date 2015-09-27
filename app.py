@@ -1,4 +1,5 @@
 import os
+import urllib2
 import requests
 from flask import Flask, redirect, url_for, render_template, request
 from instagram.client import InstagramAPI
@@ -23,22 +24,28 @@ code = None
 @app.route('/callback<cool_code>')
 def main():
   code = request.url.split("=")[1]
-  access_token = unauth_api.exchange_code_for_access_token(code)
+  print "work1"
+  access_token, user_info = unauth_api.exchange_code_for_access_token(code)
+  print "work2"
+  instaConfig['access_token'] = access_token
 
-  api = InstagramAPI(access_token=access_token, client_secret=client_secret)
-  request.session['access_token'] = access_token
+  api = InstagramAPI(**instaConfig)
+  print "work3"
+  print access_token
 
-  media = api.user_liked_media(count=10)
-  print media
+  #media = api.user_liked_media(count=10)
+  fun_url = "https://api.instagram.com/v1/users/self/media/liked?access_token=" + access_token + "&count=10"
+  
+  r = requests.get(fun_url)
+  media = r.json()
+  print "work4"
+  print media['data'][0]
   
   #media = unauth_api.media_popular(count=20)
   final_media = []
-  if code is not None:
-    print code
-  
+
   for m in media:
-    final_media.append(m.images['standard_resolution'].url)
-    print m
+    final_media.append(m.url)
   return render_template("index.html", final_media=final_media)
   # print "holla!!!!"
   # url = api.get_authorize_url(scope=["likes","comments"])
