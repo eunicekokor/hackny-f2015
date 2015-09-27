@@ -14,9 +14,10 @@ def test():
 
 @app.route('/')
 def hello_world():
-	access_code = requests.get(base_url)
-	print access_code.text
-	return '"Mercer" App! #fire'
+  print url_for('hello_world')
+  access_code = requests.get(base_url)
+  print access_code.text
+  return '"Mercer" App! #fire'
 
 if __name__ == '__main__':
 	port = int(os.environ.get('PORT', 5000))
