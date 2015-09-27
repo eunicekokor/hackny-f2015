@@ -39,7 +39,7 @@ def main():
   print access_token
 
   #media = api.user_liked_media(count=10)
-  fun_url = "https://api.instagram.com/v1/users/self/media/liked?access_token=" + access_token + "&count=30"
+  fun_url = "https://api.instagram.com/v1/users/self/media/liked?access_token=" + access_token + "&count=28"
   
   r = requests.get(fun_url)
   media = r.json()
