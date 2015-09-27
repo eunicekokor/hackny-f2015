@@ -24,11 +24,17 @@ code = None
 def main():
   print code
   print "fun"
-  print request.url.split("=")[1]
-  media = unauth_api.media_popular(count=20)
-  print "here?"
-  final_media = []
+  code = request.url.split("=")[1]
+  access_token = unauth_api.exchange_code_for_access_token(code)
 
+  api = InstagramAPI(access_token=access_token, client_secret=client_secret)
+  request.session['access_token'] = access_token
+
+  media = api.user_liked_media(count=10)
+  print media
+  
+  #media = unauth_api.media_popular(count=20)
+  final_media = []
   if code is not None:
     print code
   
