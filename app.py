@@ -1,7 +1,8 @@
 import os
 import requests
-from flask import Flask, redirect, url_for, render_template
+from flask import Flask, redirect, url_for, render_template, request
 from instagram.client import InstagramAPI
+from instagram.bind import InstagramAPIError
 app = Flask(__name__)
 
 client_id = "6c6cebd9c0b64628b6bbdb82b402577a"
@@ -19,13 +20,17 @@ unauth_api = InstagramAPI(**instaConfig)
 instagram_access_token = ""
 code = None
 @app.route('/callback')
-@app.route('/callback=?<code>')
+@app.route('/callback<cool_code>')
 def main():
+  print code
   print "redirected"
   media = unauth_api.media_popular(count=20)
+  print "here?"
   final_media = []
+
   if code is not None:
     print code
+  
   for m in media:
     final_media.append(m.images['standard_resolution'].url)
     print m
@@ -49,7 +54,6 @@ def hello_world():
   #     'media' : recent_media
   #   }
   #   print "TEST"
-
 
 
 if __name__ == '__main__':
