@@ -20,8 +20,10 @@ instagram_access_token = ""
 
 @app.route('/callback')
 def main():
-#  media = api.media_popular(count=20)
-  media = api.user_liked_media()
+  print "redirected"
+  print api
+  media = api.media_popular(count=20)
+  #media = api.user_liked_media()
   final_media = []
   print "we are here"
   for m in media:
@@ -35,6 +37,7 @@ def main():
 
 @app.route('/')
 def hello_world():
+  print requests.get(base_url)
   requests.get(base_url)
   print "uhhhhhhh"
   if instagram_access_token:
