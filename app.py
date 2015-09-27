@@ -24,8 +24,9 @@ def main():
   final_media = []
   print "we are here"
   for m in media:
-    print "TEST FINAL"
     final_media.append(m.images['standard_resolution'].url)
+    print m.keys()
+    print "key"
   return render_template("index.html", final_media=final_media)
   # print "holla!!!!"
   # url = api.get_authorize_url(scope=["likes","comments"])

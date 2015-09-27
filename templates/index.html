@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+
+<style>
+html{
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: 100;
+}
+
+.pic-display{
+width: 150px;
+height: 150px;
+}
+</style>
+
+<body>
+<h1>mercer.</h1>
+
+{% for pic in final_media %}
+
+<img class="pic-display" src="{{pic}}"></img>
+
+{% endfor %}
+</body>
+</html>
