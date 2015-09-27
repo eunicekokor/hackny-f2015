@@ -1,6 +1,6 @@
 import os
 import requests
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, render_template
 from instagram.client import InstagramAPI
 app = Flask(__name__)
 
@@ -23,9 +23,10 @@ def main():
   media = api.media_popular(count=20)
   final_media = []
   print "we are here"
-  for media in popular_media:
-    print media.images['standard_resolution'].url
-  return media
+  for m in media:
+    print "TEST FINAL"
+    final_media.append(m.images['standard_resolution'].url)
+  return render_template("index.html", final_media=final_media)
   # print "holla!!!!"
   # url = api.get_authorize_url(scope=["likes","comments"])
   # thing = requests.get(url)
