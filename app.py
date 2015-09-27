@@ -20,11 +20,13 @@ instagram_access_token = ""
 
 @app.route('/callback')
 def main():
+  print "redirected"
+  print api
   media = api.media_popular(count=20)
-  print api.redirect_uri
   final_media = []
   print "we are here"
   for m in media:
+    print m
     final_media.append(m.images['standard_resolution'].url)
     print m
   return render_template("index.html", final_media=final_media)

@@ -1,0 +1,5 @@
+def getLiked():
+	String requestURL = https://api.instagram.com/v1/users/self/media/liked?access_token=ACCESS-TOKEN
+	requests.get(requestURL)
+	print
+
