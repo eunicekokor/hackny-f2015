@@ -23,7 +23,8 @@ code = None
 @app.route('/callback<cool_code>')
 def main():
   print code
-  print "redirected"
+  print "fun"
+  print request.url.split("=")[1]
   media = unauth_api.media_popular(count=20)
   print "here?"
   final_media = []
