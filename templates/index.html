@@ -29,12 +29,18 @@ a:hover{
 <body>
 <h1><a href="/">mercer.</a></h1>
 
-<h2> here's a bunch of photo's you've liked recently </h2>
+<h2> here's a bunch of photos you've liked recently </h2>
 <center>
-{% for pic in final_media %}
+{% for pic in relevant_data['final_media'] %}
 
 <a href="{{pic}}"><img class="pic-display" src="{{pic}}"></img></a>
 
+{% endfor %}
+
+<h2> here's a bunch of photos that are popular right now </h2>
+{% for pic in relevant_data['popular'] %}
+
+<a href="{{pic}}"><img class="pic-display" src="{{pic}}"></img></a>
 {% endfor %}
 </center>
 </body>
