@@ -22,8 +22,6 @@ code = None
 @app.route('/callback')
 @app.route('/callback<cool_code>')
 def main():
-  print code
-  print "fun"
   code = request.url.split("=")[1]
   access_token = unauth_api.exchange_code_for_access_token(code)
 
