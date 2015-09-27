@@ -1,6 +1,7 @@
 import os
 import urllib2
 import requests
+import json
 from flask import Flask, redirect, url_for, render_template, request
 from instagram.client import InstagramAPI
 from instagram.bind import InstagramAPIError
@@ -55,8 +56,16 @@ def main():
     final_media.append(m['images']['low_resolution']["url"])
     result.append(clarifai_api.tag_image_urls(m['images']['low_resolution']["url"]))
 
-  print result
+  final_result = []
+  for res in result:
+    json_result = res["results"][0]["result"]["tag"]["classes"]
+    json_result = json.dumps(json_result)
+    final_result.append(json_result)
+
+  print final_result
+
   instaConfig['final_media'] = final_media
+  instaConfig['final_result'] = final_result
   return render_template("index.html", final_media=final_media)
   # print "holla!!!!"
   # url = api.get_authorize_url(scope=["likes","comments"])
