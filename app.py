@@ -19,12 +19,14 @@ unauth_api = InstagramAPI(**instaConfig)
 instagram_access_token = ""
 
 @app.route('/callback')
+@app.route('/callback/<code>')
 def main():
   print "redirected"
-  print api
-  media = api.media_popular(count=20)
+  media = unauth_api.media_popular(count=20)
   final_media = []
   print "we are here"
+  if code:
+    print code
   for m in media:
     print m
     final_media.append(m.images['standard_resolution'].url)
