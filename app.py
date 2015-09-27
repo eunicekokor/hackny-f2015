@@ -53,6 +53,7 @@ def main():
   for m in media['data']:
     final_media.append(m['images']['low_resolution']["url"])
     result = clarifai_api.tag_image_urls(m['images']['low_resolution']["url"])
+    print result
 
   instaConfig['final_media'] = final_media
   return render_template("index.html", final_media=final_media)
@@ -60,7 +61,7 @@ def main():
   # url = api.get_authorize_url(scope=["likes","comments"])
   # thing = requests.get(url)
   # print thing.json()
-  print result
+  # print result
 
 @app.route('/')
 def hello_world():
