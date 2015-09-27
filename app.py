@@ -4,6 +4,7 @@ import requests
 from flask import Flask, redirect, url_for, render_template, request
 from instagram.client import InstagramAPI
 from instagram.bind import InstagramAPIError
+from clarifai.client import ClarifaiApi
 app = Flask(__name__)
 
 client_id = "6c6cebd9c0b64628b6bbdb82b402577a"
@@ -21,6 +22,7 @@ claraConfig = {
   'client_secret':os.environ.get('CLARIFAI_APP_SECRET')
 }
 
+clarifai_api = ClarifaiApi()
 unauth_api = InstagramAPI(**instaConfig)
 
 instagram_access_token = ""
@@ -29,9 +31,7 @@ code = None
 @app.route('/callback<cool_code>')
 def main():
   code = request.url.split("=")[1]
-  print "work1"
   access_token, user_info = unauth_api.exchange_code_for_access_token(code)
-  print "work2"
   instaConfig['access_token'] = access_token
 
   api = InstagramAPI(**instaConfig)
@@ -43,15 +43,16 @@ def main():
   
   r = requests.get(fun_url)
   media = r.json()
-  print "work4"
-  print media['data']
+  #print "work4"
+  #print media['data']
   print "I hope this worked"
   
   #media = unauth_api.media_popular(count=20)
   final_media = []
-
+  
   for m in media['data']:
     final_media.append(m['images']['low_resolution']["url"])
+    result = clarifai_api.tag_image_urls(m['images']['low_resolution']["url"])
 
   instaConfig['final_media'] = final_media
   return render_template("index.html", final_media=final_media)
@@ -59,6 +60,7 @@ def main():
   # url = api.get_authorize_url(scope=["likes","comments"])
   # thing = requests.get(url)
   # print thing.json()
+  print result
 
 @app.route('/')
 def hello_world():
