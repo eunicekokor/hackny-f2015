@@ -14,17 +14,19 @@ instaConfig = {
   'client_secret':os.environ.get('CLIENT_SECRET'),
   'redirect_uri' : os.environ.get('REDIRECT_URI')
 }
-api = InstagramAPI(**instaConfig)
+unauth_api = InstagramAPI(**instaConfig)
 
 instagram_access_token = ""
 
 @app.route('/callback')
 def main():
   media = api.media_popular(count=20)
+  print api.redirect_uri
   final_media = []
   print "we are here"
   for m in media:
     final_media.append(m.images['standard_resolution'].url)
+    print m
   return render_template("index.html", final_media=final_media)
   # print "holla!!!!"
   # url = api.get_authorize_url(scope=["likes","comments"])
@@ -33,10 +35,8 @@ def main():
 
 @app.route('/')
 def hello_world():
-  print "uhhhhhhh"
-  if instagram_access_token:
-    return "We got a token"
-  print "okay"
+  url = unauth_api.get_authorize_url(scope=["likes","comments"])
+  return '<a href="%s">Connect with Instagram</a>' % url
   # if instagram info is in session variables, then display user photos
   # if 'instagram_access_token' in session and 'instagram_user' in session:
   #   userAPI = InstagramAPI(access_token=session['instagram_access_token'])
@@ -47,8 +47,6 @@ def hello_world():
   #     'media' : recent_media
   #   }
   #   print "TEST"
-
-  return redirect('/callback')
 
 
 
