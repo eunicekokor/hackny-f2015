@@ -75,14 +75,8 @@ def main():
 
 @app.route('/')
 def hello_world():
-  # print instaConfig['access_token']
-  access_token = instaConfig.get('access_token', None)
-  if access_token is None:
-    auth_url = unauth_api.get_authorize_url(scope=["likes","comments"])
-    return render_template("auth_page.html", auth_url=auth_url)
-  else:
-    final_media = instaConfig['final_media']
-    return render_template("index.html", final_media=final_media)
+  auth_url = unauth_api.get_authorize_url(scope=["likes","comments"])
+  return render_template("auth_page.html", auth_url=auth_url)
   # if instagram info is in session variables, then display user photos
   # if 'instagram_access_token' in session and 'instagram_user' in session:
   #   userAPI = InstagramAPI(access_token=session['instagram_access_token'])
