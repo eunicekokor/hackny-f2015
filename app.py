@@ -49,12 +49,13 @@ def main():
   
   #media = unauth_api.media_popular(count=20)
   final_media = []
+  result = []
   
   for m in media['data']:
     final_media.append(m['images']['low_resolution']["url"])
-    result = clarifai_api.tag_image_urls(m['images']['low_resolution']["url"])
-    print result
+    result.append(clarifai_api.tag_image_urls(m['images']['low_resolution']["url"]))
 
+  print result
   instaConfig['final_media'] = final_media
   return render_template("index.html", final_media=final_media)
   # print "holla!!!!"
