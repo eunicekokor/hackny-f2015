@@ -16,6 +16,11 @@ instaConfig = {
   'client_secret':os.environ.get('CLIENT_SECRET'),
   'redirect_uri' : os.environ.get('REDIRECT_URI')
 }
+claraConfig = {
+  'client_id':os.environ.get('CLARIFAI_APP_SECRET'),
+  'client_secret':os.environ.get('CLARIFAI_APP_SECRET')
+}
+
 unauth_api = InstagramAPI(**instaConfig)
 
 instagram_access_token = ""
@@ -34,7 +39,7 @@ def main():
   print access_token
 
   #media = api.user_liked_media(count=10)
-  fun_url = "https://api.instagram.com/v1/users/self/media/liked?access_token=" + access_token + "&count=10"
+  fun_url = "https://api.instagram.com/v1/users/self/media/liked?access_token=" + access_token + "&count=30"
   
   r = requests.get(fun_url)
   media = r.json()
@@ -47,6 +52,8 @@ def main():
 
   for m in media['data']:
     final_media.append(m['images']['low_resolution']["url"])
+
+  instaConfig['final_media'] = final_media
   return render_template("index.html", final_media=final_media)
   # print "holla!!!!"
   # url = api.get_authorize_url(scope=["likes","comments"])
@@ -55,8 +62,14 @@ def main():
 
 @app.route('/')
 def hello_world():
-  url = unauth_api.get_authorize_url(scope=["likes","comments"])
-  return '<a href="%s">Connect with Instagram</a>' % url
+  # print instaConfig['access_token']
+  access_token = instaConfig.get('access_token', None)
+  if access_token is None:
+    url = unauth_api.get_authorize_url(scope=["likes","comments"])
+    return '<a href="%s">Connect with Instagram</a>' % url
+  else:
+    final_media = instaConfig['final_media']
+    return render_template("index.html", final_media=final_media)
   # if instagram info is in session variables, then display user photos
   # if 'instagram_access_token' in session and 'instagram_user' in session:
   #   userAPI = InstagramAPI(access_token=session['instagram_access_token'])
