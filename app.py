@@ -57,8 +57,14 @@ def main():
   relevant_data['popular'] = dh.get_popular(access_token)
 
   #get clarafai on popular images
-  relevant_data['clara_pop'] = dh.get_clarifai(relevant_data['popular'])
-  print relevant_data['clara_pop']
+  # print "getting dumb stuff"
+  # relevant_data['clara_pop'] = dh.get_clarifai(relevant_data['popular'], 5)
+  print "Getting my dumb stuff"
+  relevant_data['clara_user'] = dh.get_clarifai(relevant_data['final_media'])
+
+  # print relevant_data['clara_pop']
+  # print relevant_data['clara_user']
+
   return render_template("index.html", relevant_data=relevant_data)
   # print "holla!!!!"
   # url = api.get_authorize_url(scope=["likes","comments"])

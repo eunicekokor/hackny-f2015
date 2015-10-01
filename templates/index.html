@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 
 <style>
@@ -24,16 +25,34 @@ a:visited{
 a:hover{
   color: aquamarine;
 }
+.tag:hover{
+  color: aquamarine;
+  outline-width: thin;
+  outline-style: dotted;
+  font-size: 1.3em;
+  outline-color: black;
+}
 </style>
+<script>
+$(".tag").click(function(){
+  console.log("hello");
+console.log($(this).attr("class"));
+});
 
+</script>
 <body>
 <h1><a href="/">mercer.</a></h1>
 
 <h2> here's a bunch of photos you've liked recently </h2>
 <center>
-{% for pic in relevant_data['final_media'] %}
+{% for pic in relevant_data['clara_user']['media_tags'] %}
 
-<a href="{{pic}}"><img class="pic-display" src="{{pic}}"></img></a>
+<a href="{{pic['url']}}"><img class="pic-display" src="{{pic['url']}}"></img></a>
+<br><div style="display: block; font-size: 1.2em; max-width: 25%; padding-bottom:1em">{%for tag in pic.tags%}
+<span class="tag {{tag}}">{{tag}}</span>
+{%endfor%}
+<br>
+</div>
 
 {% endfor %}
 
