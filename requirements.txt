@@ -6,7 +6,7 @@ argparse==1.2.1
 blessings==1.6
 clarifai==0.2
 gunicorn==19.2.1
-httplib2==0.8
+httplib2==0.18.0
 itsdangerous==0.24
 oauth2client==1.4.11
 pycurl==7.19.5
